@@ -37,11 +37,7 @@
 	<a href="https://aave.com/">dollars</a>
 	<a href="https://synthetix.io/">of</a>
 	<a href="https://docs.solend.fi/protocol/oracles">capital</a>
-	could be lost if an oracle does provide incorrect data. The existing
-	approach is generally to increase the number of oracle nodes, which
-	should reduce the risk that they are able to collude and mount an
-	attack. Maybe <a href="https://switchboardxyz.medium.com/introduction-to-switchboard-serverless-8c0edf7fad91">
-	Switchboard</a> will ameliorate this with <a href="https://en.wikipedia.org/wiki/Trusted_execution_environment">TEEs</a>, but I think the jury is still out on whether a TEE-centric oracle network will work.
+	could be lost if an oracle does provide incorrect data. 
 
     <p>
     	A naive solution to this problem is to simply slash oracle nodes that
@@ -50,28 +46,34 @@
 	for not giving the <i>consensus</i> result.
 
     <p>
-    	To take an exmaple, imagine that the oracle in question is 'who won the
-	US presidential election in 2020?' If 7/9 of the oracles responded 'Joe
-	Biden' and 2/9 responded 'Donald Trump,' we can slash the two with the
-	incorrect result. <i>The problem arises when the majority of nodes give
-	a spurious response. In this case, we would slash the nodes who provided
-	a correct response.</i> This is a major problem because it incentivizes
-	oracles to provide what they believe the consensus response will be. In
-	the absence of communication between nodes, the actual truth would be a
-	a <a href="https://en.wikipedia.org/wiki/Focal_point_(game_theory)">Schelling point</a>
-	and nodes are likely to give the correct response. However, malicious
+    	For example, imagine that an oracle is supposed to return the answer to
+	"Who won the US presidential election in 2020, Joe Biden or Donald Trump?"
+	Now suppose that there are 9 oracle nodes, 7 of them responded
+	'Joe Biden,' and 2 of them responded 'Donald Trump.' In this case, we
+	can slash the two nodes which gave an incorrect response. <i>The problem 
+	arises when the majority of nodes give a spurious response. In this case,
+	we would slash the nodes who provided a correct response.</i> For example,
+	This is a major problem because it incentivizes oracles to provide what 
+	they believe the consensus response will be. If I'm an oracle node and
+	I see that a majority of nodes have already voted that Donald won, I
+	will probably go along with them even if it is false. Malicious
 	individuals or groups can game this system by submitting an incorrect
 	response early. That way, the other nodes will be incentivized to follow-on
-	with more incorrect responses, or at least withold their vote if possible.
+	with more incorrect responses.
+
+    <div style="text-align: center;">
+    <img src="2022_prediction_market.png" width="400">
+    <p>This oracle may be useful for constructing prediction markets
+    </div>
 
     <p>
-    	If we want to adopt a slashing-based approach, we must make collusion
-	very hard or impossible. Specifically, we must make it very hard for
-	nodes to broadcast what answer they will select before all nodes have
-	made their selection.
+    	If we want to adopt a slashing-based approach, we must it very hard for
+	nodes to reveal who will they vote for before all nodes have voted. If
+	nodes don't know what other nodes vote for, the <a href="https://en.wikipedia.org/wiki/Focal_point_(game_theory)">
+	Schelling point</a> is the truth.
 
     <p>
-    	The solution to this is a hash-based commit-reveal scheme. During the
+    	My solution to this is a hash-based commit-reveal scheme. During the
 	commit phase, oracle nodes determine what the correct response is
 	and select a random nonce. They then hash these together, and submit
 	this hash to the chain. In pseudo-code, this looks like the following:
@@ -87,7 +89,7 @@
 
     <p>
     	During the commit phase, any node can be slashed if their nonce is
-	revealed. Slashed stake is redistributed pro rata to the other nodes.
+	revealed. Slashed stake is redistributed to the other nodes.
 	Once all nodes have submitted commits, the oracle enters a reveal
 	phase. During the reveal phase, nodes have time <i>t</i> to reveal
 	the nonces they used to compute the commits, which in turn reveals
@@ -98,16 +100,15 @@
 	nodes have committed to a response. If a committed node proves to an
 	uncommitted node that they have committed to a certain response by
 	revealing their nonce, the uncommitted node can submit this nonce to
-	the chain to receive their pro-rata share of slashing the committed node.
+	the chain to receive their share of slashing the committed node.
 	On the other hand, if the committed node uses a 'just trust me bro'
 	style of proof, the uncommitted node runs the risk that the committed
 	node is trying to trick them into submitting a non-consensus vote so that
-	the committed node can collect their pro-rata share of slashing the
-	uncommitted node. So either way, the transaction costs of collusion are
-	too high.
+	the committed node can collect their share of slashing the
+	uncommitted node. So either way, nodes can't collude easily.
 
     <p>
-    	Further, nodes can't collude with tit-for-tat because a node must 'bet
+    	Further, nodes can't use tit-for-tat because a node must 'bet
 	the farm' in a collusion-attempt. This makes it a <a href="https://en.wikipedia.org/wiki/Finite_game">
 	finite game</a>, where tit-for-tat is not the equillibirium. 
 
@@ -120,5 +121,10 @@
 	are more than 5% away from the consensus median? But this does seem like
 	it would work well for binary oracles that aren't super-real-time, like
 	presidential election results.
+
+    <p> 
+    	We may not need this if <a href="https://switchboardxyz.medium.com/introduction-to-switchboard-serverless-8c0edf7fad91">
+	Switchboard</a>'s <a href="https://en.wikipedia.org/wiki/Trusted_execution_environment">TEE</a>-centric
+	approach works.
 
 </html>

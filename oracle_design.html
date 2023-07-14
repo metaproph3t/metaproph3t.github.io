@@ -76,12 +76,14 @@
 	and select a random nonce. They then hash these together, and submit
 	this hash to the chain. In pseudo-code, this looks like the following:
 
+    <pre>
     <code>
 	let nonce = random_number()
 	let who_won = get_who_won()
 	let commit = hash([nonce, who_won])
 	submit_to_chain(commit)
     </code>
+    </pre>
 
     <p>
     	During the commit phase, any node can be slashed if their nonce is

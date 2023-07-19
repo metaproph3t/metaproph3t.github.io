@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Proph3t's homepage</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link media="all" href="/styles.css" type="text/css"
+          rel="stylesheet" />
+</head>
+
+<body>
+    <h1>Proph3t's homepage</h1>
+<p>
+<a href="https://metaproph3t.github.io">About</a>
+</p>
+<p>
+<a href="https://themetadao.org">The Meta-DAO Project</a>
+</p>
+
+<hr />
+    <div class="comp">
+
+    <h2>Yet Another Limit Order Book</h2>
+    <p>
+    	Yesterday, there were three open-source spot <a href="https://en.wikipedia.org/wiki/Central_limit_order_book">CLOB</a>
+	implementations:
+	<a href="https://github.com/project-serum/serum-dex">Serum</a>,
+	<a href="https://github.com/openbook-dex/openbook-v2">Openbook v2</a>, and
+	<a href="https://github.com/Ellipsis-Labs/phoenix-v1">Phoenix v1</a>.
+	Today, I release a <a href="https://github.com/metaDAOproject/YALOB">fourth</a>,
+	appropriately named Yet Another Limit Order Book (acronymized to YALOB).
+	Here's the story of how this one came to be:
+
+    <p>
+    	As a small cadre of individuals knows, I'm working on
+	the Meta-DAO, a DAO that will use <a href="http://mason.gmu.edu/~rhanson/futarchy.html">futarchy</a>
+	to make decisions. Early on in the implementation of
+	the Meta-DAO, I encountered a problem. In order to do futarchy programatically,
+	you need your program to be able to fetch the prices of assets. Specifically,
+	I need to pull 10-day time-weighted average prices on
+	<a href="https://github.com/metaDAOproject/Manifesto/blob/main/Manifesto.pdf">conditional member tokens</a>.
+	But here's the problem: <i>no existing CLOB implementation provides 
+	time-weighted average prices</i>. Or at least, no CLOB that I could use.
+	<a href="https://github.com/drift-labs/protocol-v2/blob/c6056d55cbdbc9e33583fc30a51e10d3a3faf724/programs/drift/src/state/perp_market.rs#L553-L565">Drift v2</a>
+	provides TWAPs, but Drift is for perpetual swaps, not just any ol' tokens. 
+
+    <p>
+    	I started down a sensible path: patching Openbook v2 so that it could
+	provide TWAPs. I realized that if there were some mechanism of
+	permissioning markets so that every trade in the market must be signed off
+	by the market's admin, I could force all conditional token trades to go
+	through a TWAP program that would record these trades for TWAP purposes.
+	Although permissioned markets had yet to be implemented, there was
+	already an <a href="https://github.com/openbook-dex/openbook-v2/issues/33">open issue</a>,
+	so I just had to go about implementing it. This turned out to be fairly
+	trivial, especially with the help of a Very Cool Dude™ named
+	<a href="https://twitter.com/binyebarwe?s=20">Binwe</a>, and
+	<a href="https://github.com/openbook-dex/openbook-v2/pull/46">the patch was merged</a>.
+
+    <p>
+    	But before I could start with the second half of this task - building the
+	TWAP program that would sit on top of Openbook v2 - I was pulled in
+	another direction. There is a siren song that afflicts all engineers;
+	it goes something like ♫<i>roll your own, baby</i>♫. Most times, I can
+	resist the siren. But sometimes it is too seductive, and you just have
+	to give in. In this case, I kept wondering if it would be possible to
+	build a CLOB that was much simpler but just as performant as the other
+	CLOBs. After all, do we <i>really</i> need 10,000 lines of code to
+	create a system that can be described on a napkin?
+
+    <p>
+    	After about 1.5 months of effort, I now have the answer to this question:
+	no, we don't. Granted, YALOB doesn't have all the fancy features of those
+	order books. You can't create automatically-expiring orders or orders that
+	have their price set by an oracle. You also can only store 128 orders
+	on each side of the book, instead of the ~1000 that is typical. But YALOB
+	is ~1,000 lines of code, compared to Serum's 11.5k, Openbook's 12k, and
+	Phoenix's 10.5k. It also uses the simple linked list to manage orders,
+	rather than the more complex red-black and radix trees that the other
+	order books use. And performance doesn't suffer either! The most important
+	operations in any order book are limit order creates and deletes. These
+	happen 100x more than takes. As far as limit order creates go,
+	<a href="https://twitter.com/aeyakovenko/status/1680603953493590016?s=20">Toly says that Serum consumes 7k CUs</a>
+	(compute units, equivalent-ish to machine instructions),
+	<a href="https://xray.helius.xyz/tx/3WVGW8aFZkPxXaj8zqZH34SWqB7HBd5KryRKgz93tB2j5XQaKZJkEaqTxo96i53Vn17rvAgKMdiHM8vK1Ete85E1">Phoenix appears to consume 20k CUs</a>, and OpenBook appears to consume
+	around 30k CUs. Limit orders in YALOB consume less than 4k CUs on average,
+	and 5.7k CUs in the worst case. And because YALOB uses a linked list,
+	order cancels are super cheap: 2.9k CUs. That's cheaper than token transfers,
+	which clock in at 4.2k CUs! So while YALOB might not be production-ready,
+	it at least is a pretty awesome reference implementation. *pats self on back*
+
+    <p>
+	If there is one take-away that I hope you get from this, it's that <i>it is
+	possible to create Solana programs that are both very simple and performant.</i>
+	I didn't even really do any optimization here. I used Anchor, which
+	supposedly adds bloat. I only used <a href="https://godbolt.org/">Godbolt</a>
+	to check the generated eBPF once. I didn't do any of <a href="https://github.com/Uniswap/v4-core/blob/309610525547f53c526014928d6ceb8803485e26/contracts/libraries/TickMath.sol#L42-L76">this disgustingness</a>.
+	I just focused on three things: getting the data structures right, keeping
+	structs small, and writing simple code. The result was a performant program.
+
+</html>

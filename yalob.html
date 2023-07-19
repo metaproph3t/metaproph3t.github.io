@@ -39,7 +39,7 @@
 	I needed to be able to fetch the prices of assets on-chain.
 	Specifically, I needed to pull 10-day time-weighted average prices on
 	<a href="https://github.com/metaDAOproject/Manifesto/blob/main/Manifesto.pdf">conditional member tokens</a>.
-	But here's the problem: <i>no existing CLOB implementation provides 
+	But there was a problem: <i>no existing CLOB implementation provided
 	time-weighted average prices</i>. Or at least, no CLOB that I could use.
 	<a href="https://github.com/drift-labs/protocol-v2/blob/c6056d55cbdbc9e33583fc30a51e10d3a3faf724/programs/drift/src/state/perp_market.rs#L553-L565">Drift v2</a>
 	provides TWAPs, but Drift is for perpetual swaps, not just any ol' tokens. 
@@ -48,34 +48,36 @@
     	My first instinct was to see if I could modify an existing CLOB to provide
 	TWAPs. Searching through Serum's repo, I found a planned feature called
 	<a href="https://github.com/project-serum/serum-dex/blob/master/dex/tests/permissioned/programs/permissioned-markets/src/lib.rs">permissioned markets</a>.
-	The idea with permissioned markets is markets would have some
-	'open orders authority' who would need to sign off on all orders. This
-	could be used to force all of that market's trades to be conducted
-	through a wrapping program which holds a open orders authority
-	PDA. I think the original intent here was to allow KYC-friendly projects
-	to maintain whitelists on who's allowed to trade their token. But
-	whatever the Creator(s) intended, I realized I could use it to create a
-	TWAP. Because I could force all trades to go through a wrapper program,
-	I could have that wrapper program record all trades. And if I could record
-	all trades, constructing a TWAP would be easy peasy lemon squeezy.
+	The idea with permissioned markets is that order book would have some
+	'open orders authority' who would need to sign off on all orders. 
+	This would allow a developer to write a wrapper contract that had its own
+	custom logic about which orders could be accepted. For example, a wrapper
+	contract could maintain a whitelist of KYCed accounts and only allow trades
+	between whitelisted accounts. I realized that I could use this feature
+	to create a TWAP. I would just have my wrapper contract record all trades'
+	prices. From that, constructing a TWAP would be easy peasy lemon squeezy.
 
     <p>
-    	There was just one hitch in this plan. Permissioned markets were planned
-	to be released in Serum v4. But before v4 could be released,
-	<a href="https://abcnews.go.com/Business/timeline-cryptocurrency-exchange-ftxs-historic-collapse/story?id=93337035">that bad thing happened</a>.
-	So TWAPs on Serum weren't going to work.
+    	There was just one hitch in this plan. Permissioned markets were going
+	to be released in Serum v4. But before v4 was released,
+	<a href="https://abcnews.go.com/Business/timeline-cryptocurrency-exchange-ftxs-historic-collapse/story?id=93337035">that bad thing happened where everyone lost their money</a>.
+	And since it seemed unlikely that <a href="https://en.wikipedia.org/wiki/John_J._Ray_III">John J. Ray III</a>
+	was going to halt FTX's bankruptcy proceedings just so that I could build my beloved TWAP,
+	I figured that TWAPs on Serum weren't going to work.
 
     <p>
     	But Lady Fortuna wasn't all against me: OpenBook, the spiritual successor
 	to Serum, had an <a href="https://github.com/openbook-dex/openbook-v2/issues/33">open issue</a>
-	for permissioned markets. So I just had to go about implementing it. Thanks
-	to Very Cool Dude™ named
-	<a href="https://twitter.com/binyebarwe?s=20">Binwe</a>,
-	<a href="https://github.com/openbook-dex/openbook-v2/pull/46">I was able to get a PR merged</a>
+	for permissioned markets. If I could implement permissioned markets for OpenBook,
+	I could build a TWAP on OpenBook. So this is what I did, with a little help (okay,
+	a lot of help) from a Very Cool Dude™ named <a href="https://twitter.com/binyebarwe?s=20">Binwe</a>.
+	On May 23rd,
+	<a href="https://github.com/openbook-dex/openbook-v2/pull/46">the PR was merged</a>.
+	
 
     <p>
-    	Now, it was on to the second half of the task: building the wrapper program
-	that would provide the TWAP. Or was it? You see, there is a siren song
+    	Now, it was on to the second half of the task: building the wrapper program.
+	Or was it? You see, there is a siren song
 	that afflicts all engineers and prevents us from getting useful things done.
 	It goes something like ♫<i>roll your own, baby</i>♫, and man is it a hard
 	song to tune out. What if I wrote my own CLOB, one with an integrated
@@ -91,22 +93,27 @@
 	and Phoenix's 10.5k. It also uses a linked list to manage orders, rather than
 	the more complex red-black tree or radix tree. And performance doesn't suffer
 	either! The most important operations in any order book are limit order
-	creates and deletes because for every limit order that is filled, ~100 are
-	placed. Creating limit orders consumes
+	creates and deletes. Creating limit orders consumes
 	<a href="https://twitter.com/aeyakovenko/status/1680603953493590016?s=20">7k CUs in Serum (according to Toly)</a>,
 	<a href="https://xray.helius.xyz/tx/3WVGW8aFZkPxXaj8zqZH34SWqB7HBd5KryRKgz93tB2j5XQaKZJkEaqTxo96i53Vn17rvAgKMdiHM8vK1Ete85E1">20k CUs in Phoenix</a>, 
 	~30k CUs in Openbook on the latest master (although this is subject to change,
-	since it's not in prod yet). Because YALOB uses a linked-list, creating limit
-	orders isn't constant-time, but a typical access pattern would consume less
-	than 4k CUs on average and 5.7k CUs in the worst case. I didn't look at how
-	many CUs the others consume to cancel an order, but since they use trees
-	I would guess that deletion consumes roughly the same amount as insertion.
-	But for YALOB, cancels are super cheap: 2.9k CUs! For reference, token transfers
-	clock in at around 4.2k CUs! I'm not going to argue that all of this is a free
-	lunch. Some of the trade-offs that YALOB makes are having a maximum of ~100
-	orders on each side of the book instead of the typical ~1000 and not including
-	features like automatically-expiring and oracle-pegged orders. But it
-	<i>does</i> have a TWAP!
+	since it's not in prod yet), and *drumroll* an average of 4k CUs. Since
+	we use a linked list, it's not constant-time, so the 4k estimate comes
+	from conservatively estimating that the average new order needs to go
+	40 orders deep (when in fact most orders are placed very close to the top
+	of the book). The worst-case is 5.7k CUs. And cancellations are where YALOB
+	really shines. I didn't look at how many CUs the others consume to cancel an order, 
+	but since they use trees I would guess that deletion consumes roughly the same
+	amount as insertion. But for YALOB, cancels are super cheap: 2.9k CUs! This is
+	even cheaper than token transfers, which clock in at around 4.2k CUs.
+
+    <p>
+	I'm not going to argue that all of this is a free
+	lunch. YALOB makes some trade-offs. For example, each side of the book can
+	store only ~100 orders, instead of the typical ~1000. YALOB also doesn't include
+	fancy features like automatically-expiring and oracle-pegged orders. But it's
+	not bare-bones either: it has configurable fees, getters, and last but not
+	least, a TWAP!
 
     <p>
     	My main take-away from this experience is that <i>it is possible to create

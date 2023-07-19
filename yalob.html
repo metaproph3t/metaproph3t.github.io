@@ -119,8 +119,8 @@
     	My main take-away from this experience is that <i>it is possible to create
 	Solana programs that are both very simple and very performant.</i>
 	I wrote YALOB in <a href="https://www.anchor-lang.com/">Anchor</a>,
-	which supposedly adds bloat. I only used <a href="https://godbolt.org/">Godbolt</a>
-	to inspect the generated machine code once. I didn't do any of <a href="https://github.com/Uniswap/v4-core/blob/309610525547f53c526014928d6ceb8803485e26/contracts/libraries/TickMath.sol#L42-L76">the disgusting optimizations that EVM programs are forced to do</a>.
+	which supposedly adds bloat. I only once used <a href="https://godbolt.org/">Godbolt</a>
+	to inspect the generated machine code. I didn't do any of <a href="https://github.com/Uniswap/v4-core/blob/309610525547f53c526014928d6ceb8803485e26/contracts/libraries/TickMath.sol#L42-L76">the disgusting optimizations that EVM programs are forced to do</a>.
 	All I did was focus on three things: getting the data structures right,
 	keeping structs small, and writing simple code. The result was a performant
 	program. 

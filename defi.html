@@ -68,45 +68,60 @@
 	</ul>
 
     <p>
-    	Why is this the case? The reason why is surprisingly straightforward.
-	See, every country has its own financial system, each of which is
-	comprised of two ledgers: the money ledger and the financial instrument
-	ledger. The money ledger tracks ownership of money (the proverbial
-	'liabilities of the central bank,' whatever the fuck that means) and
-	the financial instrument ledger tracks things like stocks, bonds, and
-	derivatives. Sometimes, things are a bit more complicated than this -
-	for example, the US 'financial instrument ledger' is really two ledgers:
-	<a href="https://www.frbservices.org/financial-services/securities/">Fedwire Securities Service</a>,
-	which tracks government bonds, and
-	<a href="https://en.wikipedia.org/wiki/Depository_Trust_%26_Clearing_Corporation">DTCC</a>,
-	which keeps track of everything else - but it's still useful to think
-	of financial systems as a combination of money ledger and financial
-	instrument ledger, managed or regulated by the nation-state. The implication
-	of this is that <i>money or financial instruments cannot flow across borders</i>.
-	US Dollars cannot be stored on the Bank of England's ledger, nor can 
-	Indian Rupees be stored on the Fed's ledger. Any asset can only exist
-	in canonical form in the jurisdiction where that asset is minted. 
+    	The problem <i>is not</i> that we don't have enough Fintechs; these are
+	issues intrinsic to the most basic layer of our financial systems. See,
+	if you've mucked around in the plumbing of the financial system
+	as I have you understand a few basic realities:
+	<ul>
+		<li>Each country has its own financial system.</li>
+		<li>Said financial systems are really just an amalgam of ledgers.
+		For example, the US financial system is based upon four ledgers:
+		<a href="https://app.frbservices.org/financial-services/wires/index.html">Fedwire Funds</a>,
+		which keeps track of money;
+		<a href="https://www.frbservices.org/financial-services/securities/">Fedwire Securities Service</a>,
+		which keeps track of government bonds; 
+		<a href="https://www.cmegroup.com/">CME</a>,
+		which keeps track of options and futures (as well as being an
+		exchange for them); and
+		<a href="https://en.wikipedia.org/wiki/Depository_Trust_%26_Clearing_Corporation">DTCC</a>,
+		which keeps track of all other securities such as equities,
+		corporate bonds, money markets, and investment trusts.
+		<li>These ledgers do not nor can they interoperate. US Dollars
+		cannot be stored on the Bank of England's ledger. Indian Rupees
+		cannot be stored on the Fed's ledger.</li>
+	<ul>
+	The result of this is that <i>assets cannot move across borders</i>.
+	don't worry we'll come back to it in the next paragraph).
+	<i>This</i> is the fundamental reason why global financial transactions
+	suck.
 
     <p>
     	Now, given that there are 196 countries it would obviously be crazy for
 	people to create an account with <i>every</i> ledger. So historically,
-	we've managed this by using a common hub: the US financial system.
-	<a href="https://www.imf.org/-/media/Files/Data/Statistics/BPM6/CATT/c3-international-trade-classified-by-currency.ashx">
-	We do the vast majority of our international trade in US dollars</a>.
-	Many companies outside the US list exclusively on US exchanges, such as
-	Spotify (NYSE: SPOT), Coupang (NYSE: CPNG), Atlassian (NASDAQ: TEAM).
-	Many more, such as Alibaba, SAP, and AstraZeneca either
-	<a href="https://en.wikipedia.org/wiki/Cross_listing">cross-list</a>
-	their shares on US exchanges or have
-	<a href="https://en.wikipedia.org/wiki/American_depositary_receipt">American depository receipts (ADRs)</a>
-	trading in the US markets. The effect of all of this is that if you're
-	a Saudi oil tycoon who wants to buy Nintendo stock, your trade will
-	probably never touch Tokyo; instead, you will use US dollars to buy Nintendo
+	we've gotten around this by using a common hub: the US financial system.
+	Case in point:
+	<ul>
+		<li><a href="https://www.imf.org/-/media/Files/Data/Statistics/BPM6/CATT/c3-international-trade-classified-by-currency.ashx">
+		We do the vast majority of our international trade in US dollars</a>.</li>
+		<li>Many companies outside the US list exclusively on US exchanges,
+		such as Spotify (NYSE: SPOT), Coupang (NYSE: CPNG), 
+		and Atlassian (NASDAQ: TEAM).</li>
+		<li>Many more, such as Alibaba, SAP, and AstraZeneca either
+		<a href="https://en.wikipedia.org/wiki/Cross_listing">cross-list</a>
+		their shares on US exchanges or have
+		<a href="https://en.wikipedia.org/wiki/American_depositary_receipt">American depository receipts (ADRs)</a>,
+		which work like stablecoins, trading in the US markets. 
+	<ul>
+	The effect of all of this is that if you're a Saudi oil tycoon who wants
+	to buy shares of Nintendo, your order will probably never touch Tokyo.
+	Instead, you will use US dollars to buy Nintendo ADRs to buy Nintendo
 	ADRs through an NYC-based broker.
 
     <p>
-    	DeFi aims to usurp this position. It has a good chance of doing so for
-	the following reasons:
+    	DeFi wants to usurp this position. In other words, the vision of DeFi
+	is to become the 
+	<a href="https://twitter.com/zxocw/status/1569462437560332288?s=20">unified global financial system</a>.
+	Reasons this vision may materialize include:
 	<ul>
 	<li>At a macro level, <a href="https://foreignpolicy.com/2023/03/07/america-is-too-scared-of-the-multipolar-world/">we're moving from a unipolar to a multipolar world</a>. <a href="https://www.visualcapitalist.com/u-s-share-of-global-economy-over-time/">US GDP as a percentage of global GDP has been shrinking since the 1960s</a>.
 	<a href="https://en.wikipedia.org/wiki/January_6_United_States_Capitol_attack">Populism</a>

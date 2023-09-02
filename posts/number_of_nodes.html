@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Proph3t's homepage</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link media="all" href="/styles.css" type="text/css"
+          rel="stylesheet" />
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@metaproph3t">
+    <meta name="twitter:title" content="Why the number of full nodes doesn't affect decentralization">
+</head>
+
+
+<body>
+<h1>Proph3t's homepage</h1>
+<h2><a href="/">https://metaproph3t.github.io</a></h2>
+<p>
+<a href="https://themetadao.org">The Meta-DAO Project</a>
+</p>
+
+<hr />
+    <div class="comp">
+
+    <h2>Why the number of full nodes doesn't affect decentralization</h2>
+
+    <p>
+	In <a href="https://vitalik.ca/general/2021/05/23/scaling.html#its-crucial-for-blockchain-decentralization-for-regular-users-to-be-able-to-run-a-node">The Limits to Blockchain Scalability</a>,
+	Vitalik discusses why he thinks it's crucial for regular users to be able
+	to run a node. Basically, his argument is that regular users verifying 
+	the chain is what keeps validators from introducing invalid state transitions.
+	I think this logic is flawed for a few reasons described in this post.
+
+    <h3>Verification of state transitions doesn't matter unless it intermediates access</h3>
+
+    <p>
+	Imagine for a second that the recent <a href="https://en.wikipedia.org/wiki/David_Grusch_UFO_whistleblower_claims">whistleblower claims</a>
+	are true and that aliens really do exist on Earth. Now imagine that these
+	aliens had, unbeknownst to us, been validating the Ethereum blockchain.
+	Each block, they download all the block's transactions, apply them to
+	their own copy of the state, and make sure that everything checks out.
+	Are these aliens helping secure Ethereum against an attack like the one
+	Vitalik describes?
+
+    <p>
+	Obviously, no, they are not. Although they are validating blocks, no
+	(human) users are using this block validation to determine whether a
+	chain is valid. A colluding group of validators could just as easily
+	pull the wool over their eyes with an invalid block. In other words,
+	<i>verification of state transitions only matters insofar as it intermediates
+	user access</i>.
+
+    <h3>In reality, users <i>are not</i> intermediating access with full nodes</h3>
+
+    <p>
+	<a href="https://www.ethernodes.org/">Ethernodes</a> lists 6,720 distinct
+	Ethereum nodes. According to <a href="https://techcrunch.com/2022/03/15/metamask-parent-company-consensys-raises-series-d-at-7b-valuation/">this TechCrunch article</a>, MetaMask has surpassed 30
+	million monthly active users (MAUs). This means that even if every 
+	single node operator was using their node to intermediate access to
+	Ethereum, only 0.02% of users are accessing Ethereum via their own full node.
+	The remaining 99.98% of users are trusting someone else to verify the
+	chain on their behalf, like <a href="https://www.infura.io/">Infura</a>,
+	<a href="https://etherscan.io/">Etherscan</a>, or <a href="https://www.coinbase.com/">Coinbase</a>.
+
+    <p>
+	In my view, this means that there is <i>practically no benefit of
+	lessening hardware requirements such that regular users can run nodes</i>.
+	The vast majority aren't going to validate anyway, hardware requirements
+	just need to be low enough that crypto service providers (exchanges, RPC providers,
+	payment processors, etc.) can run nodes. 
+	
+    <h3>So what does matter for decentralization?</h3>
+
+    <p>
+	I don't want this post to get unwieldy, so I'll briefly list the
+	things that <i>do</i> matter for decentralization:
+	<ul>
+	    <li>Light / diet clients, which prevent a rogue RPC from tricking
+		users</li>
+	    <li>Fraud proofs, which prevent an attack like the one Vitalik described
+		by giving an alarm system to light clients</li>
+	    <li>Stake dispersion (a.k.a. having a high <a href="https://news.earn.com/quantifying-decentralization-e39db233c28e">Nakamoto Coefficient</a>), which makes attacks hard by increasing the threshold
+		of nodes that would need to collude to attempt an attack</li>
+
+</html>

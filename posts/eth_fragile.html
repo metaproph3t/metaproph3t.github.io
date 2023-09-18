@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Proph3t's homepage</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link media="all" href="/styles.css" type="text/css"
+          rel="stylesheet" />
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@metaproph3t">
+    <meta name="twitter:title" content="Why Ethereum's market position is more fragile than you think">
+    <meta name="twitter:description" content="mayb no moar 'max bidding'">
+</head>
+
+
+<body>
+<h1>Proph3t's homepage</h1>
+<h2><a href="/">https://metaproph3t.github.io</a></h2>
+<p>
+<a href="https://themetadao.org">The Meta-DAO Project</a>
+</p>
+
+<hr />
+    <div class="comp">
+
+    <h2>Why Ethereum's market position is more fragile than you think</h2>
+
+    <div style="text-align: center;">
+    <img src="../img/rollups_not_eth_centric.png" width="500">
+    </div>
+
+    <p>
+    The year is 2026. All applications and users have finally finished migrating 
+    from Ethereum Mainnet to a L2 rollup such as Optimism, Arbitrum, zkSync,
+    or Scroll. Meanwhile, the price of ETH is plummeting. 'Wat mean?' asks
+    <a href="https://twitter.com/RyanSAdams">@RyanSAdams</a> on XXX (Elon got
+    a bit carried away with naming). Well, let me tell you wat mean.
+
+    <h3>Life as pictured through ETH maxi goggles</h3>
+    <div style="text-align: center;">
+    <img src="../img/eth_goggles.jpeg" width="400">
+    <p>"All I see is ETH, ETH everywhere"
+    </div>
+    <p>
+    As detailed in Vitalik's <a href="https://vitalik.ca/general/2021/01/05/rollup.html">Incomplete Guide to Rollups</a>,
+    rollups consume L1 blockspace in three ways:
+    <ol>
+	    <li>storing state roots</li>
+	    <li>publishing transaction calldata</li>
+	    <li>(in ZK rollups) on-chain verification of the ZK-SNARK</li>
+    </ol>
+    
+    <p>
+    Importantly, for any rollup with non-trivial scale,
+    <a href="https://kelvinfichter.com/pages/thoughts/tps-is-dumb/">the vast majority of the L1 gas cost comes from publishing transaction calldata</a>.
+    ETH maxis like this because it means that Ethereum users can pay cheaper
+    prices without reducing the total amount of ETH that is burnt. It's as if
+    Ethereum were an airplane, and the L2 is a type of double-decker seat that
+    allows double the number of people to sit in the plane: the plane can charge
+    less per customer while still keeping their revenue the same or even increasing it.
+
+    <h3>Back to reality...</h3>
+    <div style="text-align: center;">
+    <img src="../img/uh_oh.jpeg" width="400">
+    <p>Reality goggles can be less fun.
+    </div>
+    <p>
+    But there's a problem in this thinking. What if the so-called rollups decide
+    <i>not</i> to publish transaction calldata to Ethereum? After all, the business
+    of transaction calldata storage doesn't have network effects. Within a single
+    rollup, you could even have users that pay cheaper prices to publish to a
+    data availability layer like 
+    <a href="https://docs.celestia.org/concepts/how-celestia-works/data-availability-layer/">Celestia</a>
+    interact with users who pay more expensive prices to publish a more expensive
+    one like Ethereum Mainnet.
+
+    <p>
+    But, you say, with your lips trembling, "they wouldn't possibly think of doing
+    that! That would ruin their Eth-alignment!" Well,
+    <a href="https://blog.matter-labs.io/zkporter-a-breakthrough-in-l2-scaling-ed5e48842fbf">they already have</a>.
+    Matter Labs has proposed zkPorter, their own data availability layer, which
+    would obviate the need for publishing transaction calldata to Eth. And, in their
+    own words, "Both parts will be composable and interoperable: contracts and accounts on the zkRollup side will be able to seamlessly interact with accounts on the zkPorter side, and vice versa. That’s right! From a user’s perspective, the only perceptible difference will be a 100x reduction in fees for zkPorter accounts."
+
+    <p>
+    Now, zkPorter is as of yet not a reality, but we've also been in an environment
+    with relatively cheap gas fees. What happens in the next <a href="https://www.theblock.co/linked/149111/su-zhu-says-his-supercycle-price-thesis-was-regrettably-wrong">Zhupercycle</a>.
+    Well, all speculation, but here's my guess:
+    <ul>
+	    <li>At least one of these rollups start giving the users the option
+		    to settle to a cheaper data availability layer</li>
+	    <li>Users take that option, despite the pleadings of Eth maxis
+		    that this cheaper DA layer is marginally less secure</li>
+	    <li>Ethereum Mainnet blockspace starts become more sparse,
+		    and burn compresses</li>
+    </ul>
+
+    <p>
+    To be clear, this will be good for the entire crypto industry. Ethereum is
+    a bloated blockchain that has subsisted by its network effects. We deserve
+    to live in an ecosystem that rewards good technology, and not just being
+    early.
+
+</html>

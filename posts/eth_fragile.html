@@ -31,7 +31,9 @@
     <p>
     The year is 2026. All applications and users have finally finished migrating 
     from Ethereum Mainnet to a L2 rollup such as Optimism, Arbitrum, zkSync,
-    or Scroll. Meanwhile, the price of ETH is plummeting. 'Wat mean?' asks
+    or Scroll. Meanwhile, the price of ETH is plummeting. People are confused.
+    This is the future they wanted; why isn't it leading to the outcome they
+    wanted? 'Wat mean?' asks
     <a href="https://twitter.com/RyanSAdams">@RyanSAdams</a> on XXX (Elon got
     a bit carried away with naming). Well, let me tell you wat mean.
 
@@ -50,13 +52,11 @@
     </ol>
     
     <p>
-    Importantly, for any rollup with non-trivial scale,
-    <a href="https://kelvinfichter.com/pages/thoughts/tps-is-dumb/">the vast majority of the L1 gas cost comes from publishing transaction calldata</a>.
     ETH maxis like this because it means that Ethereum users can pay cheaper
-    prices without reducing the total amount of ETH that is burnt. It's as if
-    Ethereum were an airplane, and the L2 is a type of double-decker seat that
-    allows double the number of people to sit in the plane: the plane can charge
-    less per customer while still keeping their revenue the same or even increasing it.
+    prices without reducing the total amount of ETH burnt. It's like Ethereum
+    is an airplane, and the L2 is a magical seating technology that allows
+    more seats to fit on the plane. That way, the plane can charge less per
+    seat while still making just as much (or more!) money.
 
     <h3>Back to reality...</h3>
     <div style="text-align: center;">
@@ -64,40 +64,42 @@
     <p>Reality goggles can be less fun.
     </div>
     <p>
-    But there's a problem in this thinking. What if the so-called rollups decide
-    <i>not</i> to publish transaction calldata to Ethereum? After all, the business
-    of transaction calldata storage doesn't have network effects. Within a single
-    rollup, you could even have users that pay cheaper prices to publish to a
-    data availability layer like 
-    <a href="https://docs.celestia.org/concepts/how-celestia-works/data-availability-layer/">Celestia</a>
-    interact with users who pay more expensive prices to publish a more expensive
-    one like Ethereum Mainnet.
+    However, there's a flaw in this logic. By the estimates of Optimism employee Kelvin
+    Fichter, 
+    <a href="https://kelvinfichter.com/pages/thoughts/tps-is-dumb/">the vast majority of the L2 blockspace consumption comes from publishing transaction calldata</a>.
+    What if the so-called rollups decide <i>not</i> to publish this calldata to
+    Ethereum? After all, L2s can publish transaction calldata to any storage device that
+    their users trust. 
 
     <p>
-    But, you say, with your lips trembling, "they wouldn't possibly think of doing
-    that! That would ruin their Eth-alignment!" Well,
+    You retort, lips trembling, "they wouldn't possibly think of doing that!
+    It would ruin their Eth-alginment!" Well, I think they would. But more
+    importantly,
     <a href="https://blog.matter-labs.io/zkporter-a-breakthrough-in-l2-scaling-ed5e48842fbf">they already have</a>.
-    Matter Labs has proposed zkPorter, their own data availability layer, which
-    would obviate the need for publishing transaction calldata to Eth. And, in their
-    own words, "Both parts will be composable and interoperable: contracts and accounts on the zkRollup side will be able to seamlessly interact with accounts on the zkPorter side, and vice versa. That’s right! From a user’s perspective, the only perceptible difference will be a 100x reduction in fees for zkPorter accounts."
+    Matter Labs, the company behind zkSync, has proposed their own homegrown
+    data availability layer in order to cheapen costs for users. Here's what they
+    say about it:
+
+    <p><i>
+	    Both parts will be composable and interoperable: contracts and accounts on the zkRollup side will be able to seamlessly interact with accounts on the zkPorter side, and vice versa. That’s right! From a user’s perspective, the only perceptible difference will be a 100x reduction in fees for zkPorter accounts.</i>
 
     <p>
-    Now, zkPorter is as of yet not a reality, but we've also been in an environment
-    with relatively cheap gas fees. What happens in the next <a href="https://www.theblock.co/linked/149111/su-zhu-says-his-supercycle-price-thesis-was-regrettably-wrong">Zhupercycle</a>?
-    Well, all speculation, but here's my guess:
-    <ul>
-	    <li>At least one of these rollups start giving the users the option
-		    to settle to a cheaper data availability layer</li>
-	    <li>Users take that option, despite the pleadings of Eth maxis
-		    that this cheaper DA layer is marginally less secure</li>
-	    <li>Ethereum Mainnet blockspace starts become more sparse,
-		    and burn compresses</li>
-    </ul>
+    So Ethereum's ability to survive this shift will depend on its ability to
+    provide a better data availability service than upstarts like
+    <a href="https://docs.celestia.org/concepts/how-celestia-works/data-availability-layer/">Celestia</a>.
+    No longer will Ethereum be able to subsist off its network effects!
+
+    <h3>Conclusion</h3>
+    <p>
+    To be clear, I'm not hoping that Ethereum fails. If they really do execute
+    on <a href="https://eips.ethereum.org/EIPS/eip-4488">EIP-4488</a> and become
+    the best data availability layer the world has ever seen, the chain will
+    continue to have a big role to play in the rollup-centric world. But if they
+    can't, Ethereum will displaced by the technologically-superior
+    upstarts.
 
     <p>
-    To be clear, this will be good for the entire crypto industry. Ethereum is
-    a bloated blockchain that has subsisted by its network effects. We deserve
-    to live in an ecosystem that rewards good technology, and not just being
-    early.
+    As it should be. We deserve to live in an ecosystem that rewards good technology
+    and not just being early.
 
 </html>

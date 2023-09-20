@@ -36,26 +36,35 @@
 	I think this logic is flawed for a few reasons described in this post.
 
     <h3>Verification of state transitions doesn't matter unless it intermediates access</h3>
+    <p>
+    Suppose, for the sake of argument, that the recent
+    <a href="https://en.wikipedia.org/wiki/David_Grusch_UFO_whistleblower_claims">whistleblower claims</a>
+    are true: there are aliens on Earth. Now suppose that these extraterrestrial
+    creatures have, unbenknownst to us, been validating the Ethereum blockchain.
+    Every 12 seconds, they download the latest block and apply all of its
+    transaction to their local copy of the state, meticulously ensuring that there
+    have been no invalid state transitions. Are the aliens helping secure Ethereum?
+    Do they stand as a bulwark against the attack Vitalik describes?
 
     <p>
-	Imagine for a second that the recent <a href="https://en.wikipedia.org/wiki/David_Grusch_UFO_whistleblower_claims">whistleblower claims</a>
-	are true and that aliens really do exist on Earth. Now imagine that these
-	aliens had, unbeknownst to us, been validating the Ethereum blockchain.
-	Each block, they download all the block's transactions, apply them to
-	their own copy of the state, and make sure that everything checks out.
-	Are these aliens helping secure Ethereum against an attack like the one
-	Vitalik describes?
+    Unfortunately, the answer is no. No doubt, the aliens would instantly spot
+    any invalid transactions. But unless they frantically raise the alarms,
+    alerting Ethereum users that a malicious transaction has been inserted
+    into the ledger, all of the aliens' meticulous checking will have been for
+    naught.
 
     <p>
-	Obviously, no, they are not. Although they are validating blocks, no
-	(human) users are using this block validation to determine whether a
-	chain is valid. A colluding group of validators could just as easily
-	pull the wool over their eyes with an invalid block. In other words,
-	<i>verification of state transitions only matters insofar as it intermediates
-	user access</i>.
+    But don't lose hope! Even without the aliens protecting them, the users may
+    be secure against such an attack. For example, if everyone is running their
+    own full node and has connected their
+    wallet to it, users will automatically reject the invalid chain. Or, if
+    users don't run full nodes but instead use an RPC service like Infura to
+    intermediate their access, users will be okay as long as their RPC service
+    doesn't join the attack. The point is that <i>the number of honest nodes
+    and malicious nodes doesn't matter; what matters is whether users are intermediating
+    their access via honest nodes or malicious nodes.</i>
 
-    <h3>In reality, users <i>are not</i> intermediating access with full nodes</h3>
-
+    <h3>In reality, users <i>do not</i> intermediate access with full nodes</h3>
     <p>
 	<a href="https://www.ethernodes.org/">Ethernodes</a> lists 6,720 distinct
 	Ethereum nodes. According to <a href="https://techcrunch.com/2022/03/15/metamask-parent-company-consensys-raises-series-d-at-7b-valuation/">this TechCrunch article</a>, MetaMask has surpassed 30
@@ -73,25 +82,41 @@
     </div>
 
     <p>
-	In my view, this means that there is <i>practically no benefit of
-	lessening hardware requirements such that regular users can run nodes</i>.
-	The vast majority aren't going to validate anyway, so hardware requirements
-	just need to be low enough that crypto service providers (exchanges, RPC providers,
-	payment processors, etc.) can run nodes. 
-	
-    <h3>So what does matter for decentralization?</h3>
+    In other words, the vast majority of users <i>do not run full nodes</i>.
+    And it appears that their predilection for not doing so has little to do
+    with cost: Solana, a network that is
+    <a href="https://cryptoguiding-com.ngontinh24.com/articles/how-much-does-it-cost-to-run-ethereum-node">exponentially more costly to validate</a>,
+    has <a href="https://solana.com/news/validator-health-report-march-2023">2,421</a>
+    nodes as of March 2023. That's right: despite Solana being 5 years younger
+    and costing at least 1 order of magnitude more
+    to validate than Ethereum, the two networks' node counts are relatively close.
+
+    <h3>Wat mean?</h3>
+    <p>
+    The point is not even that Solana is almost as decentralized as Ethereum,
+    and that Solana's trade-off makes sense. The point is that <i>this trade-off
+    doesn't exist</i>, and that Solana may be <i>more</i> decentralized than Ethereum.
+    After all, consider that two firms - Consensys (which owns MetaMask and Infura)
+    and Etherscan - have a near duopoly over intermediating user access to Ethereum,
+    whereas Solana has many competing wallets and explorers. 
 
     <p>
-	I don't want this post to get unwieldy, so I'll briefly list the
-	things that <i>do</i> matter for decentralization:
-	<ul>
-	    <li>Light / diet clients, which prevent a rogue RPC from tricking
-		users</li>
-	    <li>Fraud proofs, which prevent an attack like the one Vitalik described
-		by giving an alarm system to light clients</li>
-	    <li>Stake dispersion (a.k.a. having a high <a href="https://news.earn.com/quantifying-decentralization-e39db233c28e">Nakamoto Coefficient</a>), which makes attacks hard by increasing the threshold
-		of nodes that would need to collude to attempt an attack</li>
-	    <li>A culture of decentralization, since ultimately blockchains are
-		ultimately just vehicles for automating social consensus</li>
+    So what <i>does</i> matter for decentralization, if not number of nodes or hardware
+    requirements? Here's a list:
+    <ul>
+    <li><a href="https://www.tinydancer.io/whitepaper.pdf">Light / diet clients</a>, which <i>don't</i> prevent a '51% attack' (although
+	this phrase should be modified to '67% attack' for PoS chains) like the
+	one Vitalik describes but <i>do</i> prevent a rogue RPC from tricking
+	its users</li>
+    <li><a href="https://sonnino.com/papers/fraudproofs.pdf">Fraud proofs</a>, which
+    	<i>do</i> prevent 51% attacks by giving an alarm system to light clients</li>
+    <li>Validity proofs, a la Mina, which use cryptography to prove that every
+	block is valid</li>
+    <li>Stake dispersion (a.k.a. having a high <a href="https://news.earn.com/quantifying-decentralization-e39db233c28e">Nakamoto Coefficient</a>), which makes 51% attacks hard by increasing the threshold
+	of nodes that would need to collude to attempt an attack</li>
+    <li>A culture of decentralization, which increases the probability that
+	a malicious chain would be rolled back even if users don't immediately
+	detect invalid state transitions</li>
+    </ul>
 
 </html>

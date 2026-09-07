@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <script src="./image-slot.js"></script>
+  <style>
+    @font-face { font-family: 'Söhne'; src: url('./uploads/Söhne-Leicht.otf') format('opentype'); font-weight: 300; font-style: normal; }
+    @font-face { font-family: 'Söhne'; src: url('./uploads/Söhne-LeichtKursiv.otf') format('opentype'); font-weight: 300; font-style: italic; }
+    @font-face { font-family: 'Söhne'; src: url('./uploads/Söhne-Buch.otf') format('opentype'); font-weight: 400; font-style: normal; }
+    @font-face { font-family: 'Söhne'; src: url('./uploads/Söhne-BuchKursiv.otf') format('opentype'); font-weight: 400; font-style: italic; }
+    @font-face { font-family: 'Söhne'; src: url('./uploads/Söhne-Kräftig.otf') format('opentype'); font-weight: 500; font-style: normal; }
+    @font-face { font-family: 'Söhne'; src: url('./uploads/Söhne-KräftigKursiv.otf') format('opentype'); font-weight: 500; font-style: italic; }
+    @font-face { font-family: 'Söhne'; src: url('./uploads/Söhne-Halbfett.otf') format('opentype'); font-weight: 600; font-style: normal; }
+    @font-face { font-family: 'Söhne'; src: url('./uploads/Söhne-Dreiviertelfett.otf') format('opentype'); font-weight: 700; font-style: normal; }
+    @font-face { font-family: 'PP Neue Montreal'; src: url('./uploads/PPNeueMontreal-Light.otf') format('opentype'); font-weight: 300; font-style: normal; }
+    @font-face { font-family: 'PP Neue Montreal'; src: url('./uploads/PPNeueMontreal-LightItalic.otf') format('opentype'); font-weight: 300; font-style: italic; }
+    @font-face { font-family: 'PP Neue Montreal'; src: url('./uploads/PPNeueMontreal-Regular.otf') format('opentype'); font-weight: 400; font-style: normal; }
+    @font-face { font-family: 'PP Neue Montreal'; src: url('./uploads/PPNeueMontreal-Italic.otf') format('opentype'); font-weight: 400; font-style: italic; }
+    @font-face { font-family: 'PP Neue Montreal'; src: url('./uploads/PPNeueMontreal-Semibold.otf') format('opentype'); font-weight: 600; font-style: normal; }
+    @font-face { font-family: 'PP Neue Montreal'; src: url('./uploads/PPNeueMontreal-SemiboldItalic.otf') format('opentype'); font-weight: 600; font-style: italic; }
+    @font-face { font-family: 'PP Neue Montreal'; src: url('./uploads/PPNeueMontreal-Extrabold.otf') format('opentype'); font-weight: 800; font-style: normal; }
+    @font-face { font-family: 'TT Norms Pro'; src: url('./uploads/TT_Norms_Pro_Trial_Normal.woff2') format('woff2'); font-weight: 400; font-style: normal; }
+    @font-face { font-family: 'TT Norms Pro'; src: url('./uploads/TT_Norms_Pro_Trial_Italic.woff2') format('woff2'); font-weight: 400; font-style: italic; }
+    @font-face { font-family: 'TT Norms Pro'; src: url('./uploads/TT_Norms_Pro_Trial_Medium.woff2') format('woff2'); font-weight: 500; font-style: normal; }
+    @font-face { font-family: 'TT Norms Pro'; src: url('./uploads/TT_Norms_Pro_Trial_DemiBold.woff2') format('woff2'); font-weight: 600; font-style: normal; }
+    @font-face { font-family: 'TT Norms Pro'; src: url('./uploads/TT_Norms_Pro_Trial_Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; }
+    @font-face { font-family: 'Open Runde'; src: url('https://cdn.jsdelivr.net/fontsource/fonts/open-runde@latest/latin-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; }
+    @font-face { font-family: 'Open Runde'; src: url('https://cdn.jsdelivr.net/fontsource/fonts/open-runde@latest/latin-500-normal.woff2') format('woff2'); font-weight: 500; font-style: normal; }
+    @font-face { font-family: 'Open Runde'; src: url('https://cdn.jsdelivr.net/fontsource/fonts/open-runde@latest/latin-700-normal.woff2') format('woff2'); font-weight: 700; font-style: normal; }
+    @font-face { font-family: 'STK Miso'; src: url('./uploads/STKMiso-Regular-Trial.otf') format('opentype'); font-weight: 400; font-style: normal; }
+    @font-face { font-family: 'STK Miso'; src: url('./uploads/STKMiso-Italic-Trial.otf') format('opentype'); font-weight: 400; font-style: italic; }
+    @font-face { font-family: 'STK Miso'; src: url('./uploads/STKMiso-Medium-Trial.otf') format('opentype'); font-weight: 500; font-style: normal; }
+    @font-face { font-family: 'STK Miso'; src: url('./uploads/STKMiso-Bold-Trial.otf') format('opentype'); font-weight: 700; font-style: normal; }
+    html, body { margin: 0; padding: 0; background: {{ bg }}; }
+    body { -webkit-font-smoothing: antialiased; }
+    a { color: #0000ee; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    a:hover { opacity: 0.7; }
+    a:visited { color: #551a8b; }
+    ::selection { background: rgba(0, 0, 0, 0.1); }
+    @keyframes cardIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</helmet>
+<div style="min-height: 100vh; background: {{ bg }}; color: {{ ink }}; font-family: 'PP Neue Montreal', Helvetica, sans-serif; display: flex; flex-direction: column; align-items: center; padding: 12vh 24px 20vh 24px; box-sizing: border-box; transition: background 0.3s, color 0.3s;">
+
+  <div style="width: {{ colW }}; display: flex; flex-direction: column; gap: 26px; font-size: 15px; line-height: 1.55; font-weight: 400; text-align: left; text-wrap: pretty;">
+
+    <p style="margin: 0;">I believe that decision markets are one of the handful of things happening right now that can alter the course of civilization.</p>
+
+    <p style="margin: 0;">This belief is based on a pretty simple chain of logic:</p>
+
+    <ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; text-align: left;">
+      <li style="border: 1px solid {{ rule }}; border-radius: 8px; padding: 16px 18px; transition: border-color 0.2s;" style-hover="border-color: {{ faint }};">
+        <span onClick="{{ toggle1 }}" style="display: grid; grid-template-columns: 28px 1fr 20px; gap: 12px; align-items: start; cursor: pointer;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: {{ faint }}; padding-top: 4px;">1</span>
+          <span style="font-weight: 500;">Institutions, the rules and incentives that shape human behavior, matter a lot.</span>
+          <span style="color: {{ faint }}; font-size: 16px; line-height: 1.4; text-align: center; transform: {{ chev1 }}; transition: transform 0.2s;">+</span>
+        </span>
+        <sc-if value="{{ open1 }}" hint-placeholder-val="{{ false }}">
+          <span style="display: grid; grid-template-columns: 28px 1fr 20px; gap: 12px; margin-top: 14px; animation: cardIn 0.2s ease;">
+            <span></span>
+            <span style="display: flex; flex-direction: column; gap: 12px;">
+              <span style="font-size: 14px; line-height: 1.55; color: {{ inkSoft }};">Think about the difference between North Korea and South Korea. <br><br>Similar people, radically different outcomes. The average North Korean makes three pennies for every dollar made by the average South Korean, is 20x as likely to be malnourished, and is 6.6x as likely to die as a baby.<br></span>
+              <image-slot id="korea-night" shape="rounded" radius="4" src="./assets/korea-night.jpg" fit="cover" placeholder="Korea at night (satellite)" style="width: 75%; aspect-ratio: 5 / 3; align-self: center;"></image-slot>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; line-height: 1.5; color: {{ faint }}; text-align: center;">The Korean peninsula at night is one depiction of how different the lives of North Koreans and South Koreans is</span>
+              <span style="font-size: 14px; line-height: 1.55; color: {{ inkSoft }};">Of course, some of this comes from North Korea being excluded from trading with the West.<br><br>But much of it comes from the way the countries are organized: North Korea is a totalitarian dictatorship, South Korea is roughly a free-market democracy. South Koreans are incentivized to create value for other South Koreans, either by selling their labor or by creating new enterprises, while North Koreans are incentivized to follow orders.<br><br>This logic doesn't just apply to countries. Think about the difference between a startup with founder alignment and a bloated enterprise full of empire-builders. One is optimized for winning, the other is optimized for the prestige of its managers, and this makes all the difference.</span>
+            </span>
+            <span></span>
+          </span>
+        </sc-if>
+      </li>
+      <li style="border: 1px solid {{ rule }}; border-radius: 8px; padding: 16px 18px; transition: border-color 0.2s;" style-hover="border-color: {{ faint }};">
+        <span onClick="{{ toggle2 }}" style="display: grid; grid-template-columns: 28px 1fr 20px; gap: 12px; align-items: start; cursor: pointer;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: {{ faint }}; padding-top: 4px;">2</span>
+          <span style="font-weight: 500;">Markets are the strongest information aggregation system we have.</span>
+          <span style="color: {{ faint }}; font-size: 16px; line-height: 1.4; text-align: center; transform: {{ chev2 }}; transition: transform 0.2s;">+</span>
+        </span>
+        <sc-if value="{{ open2 }}" hint-placeholder-val="{{ false }}">
+          <span style="display: grid; grid-template-columns: 28px 1fr 20px; gap: 12px; margin-top: 14px; animation: cardIn 0.2s ease;">
+            <span></span>
+            <span style="display: flex; flex-direction: column; gap: 12px;">
+              <span style="font-size: 14px; line-height: 1.55; color: {{ inkSoft }};">Markets have a long track record of beating alternative institutions at predicting the future:<br>-&nbsp;<a href="https://t.co/GdDHrG9XXG">Prediction markets beat professional pollsters</a>.<br>- <a href="https://authors.library.caltech.edu/records/2de2j-w4z25">Orange juice futures markets beat government weather forecasts</a>.<br>- In 1986 when the Challenger space shuttle exploded, <a href="https://t.co/V81f9NTwZD">the market had figured out that Morton-Thiakol's O-Rings were the cause within 16 minutes</a>.</span>
+              <span style="border-top: 1px solid {{ rule }};"></span>
+              <image-slot id="challenger-chart" shape="rounded" radius="4" src="./assets/challenger-chart.png" fit="contain" placeholder="Morton Thiokol stock, Jan 28 1986" style="width: 100%; aspect-ratio: 5 / 3;"></image-slot>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; line-height: 1.5; color: {{ faint }};">You can see that Morton-Thiakol's shares dipped far more than the other government contractors after the explosion<br></span><span style="font-size: 14px; line-height: 1.55; color: {{ inkSoft }};">Markets may not be perfect, but they're a heck of a lot better than voting or committees.</span>
+            </span>
+            <span></span>
+          </span>
+        </sc-if>
+      </li>
+      <li style="border: 1px solid {{ rule }}; border-radius: 8px; padding: 16px 18px; transition: border-color 0.2s;" style-hover="border-color: {{ faint }};">
+        <span onClick="{{ toggle3 }}" style="display: grid; grid-template-columns: 28px 1fr 20px; gap: 12px; align-items: start; cursor: pointer;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: {{ faint }}; padding-top: 4px;">3</span>
+          <span style="font-weight: 500;">Our society's core institutions, from our companies to our governments, are far from optimal at making decisions.</span>
+          <span style="color: {{ faint }}; font-size: 16px; line-height: 1.4; text-align: center; transform: {{ chev3 }}; transition: transform 0.2s;">+</span>
+        </span>
+        <sc-if value="{{ open3 }}" hint-placeholder-val="{{ false }}">
+          <span style="display: grid; grid-template-columns: 28px 1fr 20px; gap: 12px; margin-top: 14px; animation: cardIn 0.2s ease;">
+            <span></span>
+            <span style="display: flex; flex-direction: column; gap: 12px;">
+              
+              <span style="display: flex; flex-direction: column; gap: 8px; padding-left: 14px; border-left: 2px solid {{ rule }};">
+                <span style="font-size: 14px; line-height: 1.55; color: {{ inkSoft }};">“We do not call upon ordinary untrained citizens to perform surgery, fly airplanes, design computers, or carry out the other myriad tasks needed to keep society functioning, what makes governance different? The problem is readily understood: if we give governance to ‘experts’ they will make decisions in their own best interests, not in the best interests of us all.”</span>
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; line-height: 1.5; color: {{ faint }};">Ralph Merkle, <a href="https://attachments.are.na/1453657/45b6dbafd8bba7996c923820282fb334.pdf?1511529529">DAOs, Democracy, and Governance</a></span>
+              </span>
+              <span style="display: flex; flex-direction: column; gap: 8px; padding-left: 14px; border-left: 2px solid {{ rule }};">
+                <span style="font-size: 14px; line-height: 1.55; color: {{ inkSoft }};">“Masses recognize elites, who oversee experts, who pick details.”</span>
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; line-height: 1.5; color: {{ faint }};">Robin Hanson, <a href="https://www.overcomingbias.com/p/elites-must-rulehtml">Elites Must Rule</a></span>
+              </span>
+            </span>
+            <span></span>
+          </span>
+        </sc-if>
+      </li>
+    </ol>
+
+    <p style="margin: 0; display: grid; grid-template-columns: 28px 1fr; gap: 12px;"><span style="color: {{ ink }}; font-weight: 700; font-size: 18px; line-height: 1.2;">∴</span><span style="font-weight: 500;">Decision markets, a system whereby decisions are made via markets, could bring about a step-function improvement in our collective welfare.</span></p>
+
+    <p style="margin: 0;">If you agree with this logic and want to work on something civilization-bending, consider <a href="https://jobs.metadao.fi">joining us</a> or <a href="https://www.metadao.fi/projects/create">starting a decision market-native company</a>.</p>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;darkMode&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { sel: 0 };
+  renderVals() {
+    const dark = this.props.darkMode ?? false;
+    const sel = this.state.sel;
+    const t = i => () => this.setState({ sel: this.state.sel === i ? 0 : i });
+    return {
+      bg: dark ? '#0a0a0a' : '#ffffff',
+      ink: dark ? '#e5e5e5' : '#171717',
+      faint: dark ? '#737373' : '#a3a3a3',
+      inkSoft: dark ? '#a3a3a3' : '#525252',
+      rule: dark ? '#262626' : '#e5e5e5',
+      colW: 'min(600px, 100%)',
+      open1: sel === 1, open2: sel === 2, open3: sel === 3,
+      toggle1: t(1), toggle2: t(2), toggle3: t(3),
+      chev1: sel === 1 ? 'rotate(45deg)' : 'none',
+      chev2: sel === 2 ? 'rotate(45deg)' : 'none',
+      chev3: sel === 3 ? 'rotate(45deg)' : 'none',
+    };
+  }
+}
+</script>
+</body>
+</html>
